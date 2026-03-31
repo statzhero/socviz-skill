@@ -1,54 +1,55 @@
 # socviz-skill
 
-A Claude/Codex skill for data visualization with ggplot2, based on Kieran Healy's [*Data Visualization: A Practical Introduction*](https://socviz.co) (2nd ed., 2026).
+An LLM skill for data visualization with `ggplot2`, based on Kieran Healy's [*Data Visualization: A Practical Introduction*](https://socviz.co) (2nd ed., 2026, Princeton University Press).
 
-Covers chart type selection, perceptual principles, layered plot construction, faceting, labeling, model visualization, maps, color palettes, and theme customization.
+## What does it do?
 
-## What's included
+When you ask an LLM to write `ggplot2` code, it draws on its training data, which mixes good and bad practice from across the internet. This skill gives the model a structured reference. It encodes the workflow, geom selection logic, perceptual principles, and common anti-patterns from *Data Visualization* so the model can produce better plots with less back-and-forth.
 
-- `SKILL.md` -- Main skill with workflow, geom selection guide, and anti-patterns
-- `references/` -- Seven reference files covering perception, ggplot2 fundamentals, grouping/faceting, labels/annotations, model visualization, maps, and themes
+The skill covers the full visualization workflow: choosing chart types for different data, mapping variables to aesthetics, grouping and faceting, labeling and annotation, visualizing model output, drawing maps, and polishing themes for publication.
 
 ## Installation
 
-### Claude Code
+### Claude Code (one command)
 
-Copy the skill into your Claude Code skills directory:
-
-```bash
-# Clone
-git clone https://github.com/statzhero/socviz-skill.git
-
-# Copy to your skills directory
-cp -r socviz-skill ~/.claude/skills/socviz
-```
-
-Or add it directly as a single file if you only want the core skill:
+Clone directly into your skills directory:
 
 ```bash
-mkdir -p ~/.claude/skills/socviz
-curl -o ~/.claude/skills/socviz/SKILL.md \
-  https://raw.githubusercontent.com/statzhero/socviz-skill/main/SKILL.md
+git clone https://github.com/statzhero/socviz-skill.git ~/.claude/skills/socviz
 ```
+
+That's it. The skill is available immediately as `/socviz` in any Claude Code session.
+
+If you prefer not to use the terminal, you can add skills from the Claude desktop app:
+
+1. [Download this repository as a ZIP](https://github.com/statzhero/socviz-skill/archive/refs/heads/main.zip) from GitHub.
+2. Open the Claude desktop app and switch to the **Code** tab.
+3. Click **Customize** in the left sidebar, then select **Skills**.
+4. Click the **+** button, choose **Upload a skill**, and select the ZIP file.
 
 ### Codex
 
-Place the skill file where Codex can find it. Codex reads markdown instructions from the repository root or a designated instructions directory:
+Clone into your user skills directory (available across all projects):
 
 ```bash
-# Option 1: Add to your project's codex instructions
-mkdir -p .codex/skills
-cp -r socviz-skill/* .codex/skills/socviz/
-
-# Option 2: Reference in AGENTS.md
-echo "See [socviz skill](./skills/socviz/SKILL.md) for ggplot2 visualization guidance." >> AGENTS.md
+git clone https://github.com/statzhero/socviz-skill.git ~/.agents/skills/socviz
 ```
 
-Codex picks up files referenced in `AGENTS.md` at the repo root. Adding SKILL.md there (or copying its contents into your instructions) makes the skill available during Codex sessions.
+If you prefer not to use the terminal, [download the ZIP](https://github.com/statzhero/socviz-skill/archive/refs/heads/main.zip), unzip it, and move the folder to `~/.agents/skills/socviz/` or `.agents/skills/socviz/` inside your project.
 
-### Manual (any LLM)
+### Other LLMs
 
-Paste the contents of `SKILL.md` into your system prompt or attach it as context. The reference files in `references/` provide additional detail that the skill reads on demand.
+Paste the contents of `SKILL.md` into your system prompt or attach it as context. The reference files in `references/` can be appended when you need coverage of a specific topic.
+
+## Test the skill
+
+After installing, try this prompt in Claude Code:
+
+```
+/socviz Make a histogram of mpg from mtcars, broken out by number of cylinders
+```
+
+This is a case where base R struggles. `hist()` has no built-in way to split by group, so you end up layering semi-transparent histograms by hand. The skill should guide the model toward `facet_wrap(~ cyl)`.
 
 ## License
 
