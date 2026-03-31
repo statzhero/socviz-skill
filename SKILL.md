@@ -8,7 +8,7 @@ metadata:
   author: Kieran Healy
   edition: 2nd (2026)
   publisher: Princeton University Press
-allowed-tools: Read, Grep, Glob
+allowed-tools: Read, Edit, Write, Grep, Glob, mcp__r-btw__*
 ---
 
 # Data Visualization with ggplot2

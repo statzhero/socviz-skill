@@ -46,10 +46,10 @@ Paste the contents of `SKILL.md` into your system prompt or attach it as context
 After installing, try this prompt in Claude Code:
 
 ```
-/socviz Make a histogram of mpg from mtcars, broken out by number of cylinders
+/socviz Make a histogram of body mass from the penguins data, broken out by species
 ```
 
-This is a case where base R struggles. `hist()` has no built-in way to split by group, so you end up layering semi-transparent histograms by hand. The skill should guide the model toward `facet_wrap(~ cyl)`.
+This is a case where base R struggles. `hist()` has no built-in way to split by group, so you end up layering semi-transparent histograms by hand. The skill should guide the model toward `facet_wrap(~ species)`.
 
 ## License
 
